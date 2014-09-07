@@ -44,18 +44,12 @@ function jp_rest_client_get_json( $url ) {
  *
  * @param string|array $post_types Post type(s) to query for. Can be on post type as a string or an array of post types. Default is 'post'
  * @param bool|array   $filters Optional. Filters to use in query. Should be an array in form of filter => value. See REST API docs for possible values. The default is false, which skips adding filters.
- * @param string $base Optional. Base for making request. Default is 'wp-json/posts?
+ * @param string $end_point End point to make request to. Defaults to 'posts' which is all this function supports/is tested with.
  *
  * @return string|void
  */
-function jp_rest_client_posts_url_string( $post_types = 'post', $filters = false, $rooturl = 'home_url', $base = '/wp-json/posts?' ) {
-	if ( is_callable( $rooturl ) ) {
-		$url = call_user_func( $rooturl );
-		$url = $url.$base;
-	}
-	else {
-		$url = $rooturl.$base;
-	}
+function jp_rest_client_posts_url_string( $post_types = 'post', $filters = false, $end_point = 'posts' ) {
+	$url = json_url( $end_point );
 
 	if ( is_string(  $post_types ) ) {
 		$post_types = array( $post_types);
