@@ -3,7 +3,8 @@ JP WP REST API Client
 
 A simple client for creating and updating posts via the WordPress REST API via the WordPress HTTP API. Most of this code is based on articles I wrote for [Torque](http://torquemag.io/author/joshp/).
 
-###UsagePost
+###Usage
+* Get A Post
 ```php
     //get url string for posts in multiple CPTs with several filters
     $filters = array(
@@ -24,6 +25,31 @@ A simple client for creating and updating posts via the WordPress REST API via t
     //make request
     $response = JP_WP_REST_API_Client::get_json( $url );
 ```
+
+* Get A Post Leveraging Cache
+```php
+    //get url string for posts in multiple CPTs with several filters
+    $filters = array(
+    	'posts_per_page' => 50,
+    	'orderby' => 'modified_gmt',
+    	'offset' => '10'
+    );
+
+    $post_types = array(
+    	'post',
+    	'page',
+    	'book',
+    	'author'
+    );
+
+    $url = JP_WP_REST_API_Client::posts_url_string( $post_types, $filters );
+
+    //make request
+    $response = JP_WP_REST_API_Client::get_json_cached( $url );
+```
+
+* Get All The Posts Leveraging Cache
+`$posts = JP_WP_REST_API_Client::get_json_cached( json_url() );```
 
 * Copy Post From Remote Site To Local Site
 ```php

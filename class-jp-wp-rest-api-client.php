@@ -12,8 +12,25 @@ if ( class_exists( 'JP_WP_REST_API_Client' ) || ! function_exists( 'json_url' ) 
 	return;
 }
 
+//autoload dependencies
+if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
+	require_once( __DIR__ . '/vendor/autoload.php' );
+}
+
+
 class JP_WP_REST_API_Client {
 	public static $timeout = 30;
+
+	public static function get_json_cached( $url, $expires = 600 ) {
+		if ( function_exists( 'tlc_transient' ) ) {
+			return tlc_transient( md5( __FUNCTION__ . $url  ) )
+				->updates_with( self::get_json( array( $url ) ) )
+				->expires_in( $expires )
+				->get();
+		} else {
+			return self::get_json( $url );
+		}
+	}
 
 	/**
 	 * Makes a GET request to the WP REST API & returns JSON Object
