@@ -8,7 +8,7 @@
  * @link      
  * @copyright 2014 Josh Pollock
  */
-if ( class_exists( 'JP_WP_REST_API_Client' ) ) {
+if ( class_exists( 'JP_WP_REST_API_Client' ) || ! function_exists( 'json_url' ) ) {
 	return;
 }
 
