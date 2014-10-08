@@ -3,6 +3,16 @@ JP WP REST API Client
 
 A simple client for creating and updating posts via the WordPress REST API via the WordPress HTTP API. Most of this code is based on articles I wrote for [Torque](http://torquemag.io/author/joshp/).
 
+Utilizes [Mark Jaquith's WP-TLC-Transients Library](https://github.com/markjaquith/WP-TLC-Transients). Requires WordPress and the [WordPress REST API](http://wp-api.org).
+
+### Installation
+This is not a plugin.
+
+The easy and best way to add it is to add `"shelob9/jp-wp-rest-api-client": "dev-master"` to your site/plugin/theme's composer.json. Include composer autoloader.
+
+Alternatively, add this repo to your site/plugin/theme using a Git Submodule or by employing the dark art of copypasta. Then manually include its file(s). Note: Caching isn't going to work unless you do a composer update or otherwise include [Mark Jaquith's WP-TLC-Transients Library](https://github.com/markjaquith/WP-TLC-Transients).
+
+
 ###Usage
 * Get A Post
 ```php
