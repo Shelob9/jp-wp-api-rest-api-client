@@ -2,7 +2,7 @@
     "name"       : "shelob9/jp-wp-rest-api-client",
     "description": "A simple client for working with the WordPress REST API via the WordPress HTTP API",
     "keywords"   : ["wordpress", "rest-api"],
-    "homepage"   : "https://github.com/markjaquith/WP-TLC-Transients",
+    "homepage"   : "https://github.com/Shelob9/jp-wp-api-rest-api-client",
     "license"    : "GPL-2.0+",
     "authors"    : [
         {
@@ -11,8 +11,8 @@
         }
     ],
     "support"    : {
-        "issues": "https://github.com/markjaquith/WP-TLC-Transients/issues",
-        "source": "https://github.com/markjaquith/WP-TLC-Transients"
+        "issues": "https://github.com/Shelob9/jp-wp-api-rest-api-client/issues",
+        "source": "https://github.com/Shelob9/jp-wp-api-rest-api-client"
     },
     "autoload"   : {
         "classmap": ["class-jp-wp-rest-api-client.php"]
