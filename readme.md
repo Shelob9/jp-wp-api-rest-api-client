@@ -56,6 +56,7 @@ A simple client for creating and updating posts via the WordPress REST API via t
     }
 ```
 
-
+### License
+Copyright 2014 Josh Pollock. Licensed under the terms of the GNU General public license version 2. Please share with your neighbor.
 
 
