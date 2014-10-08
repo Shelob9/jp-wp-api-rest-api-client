@@ -19,6 +19,7 @@ class JP_WP_REST_API_Client {
 	 * Makes a GET request to the WP REST API & returns JSON Object
 	 *
 	 * @param string $url URL to GET
+	 * @param bool|int          Optional. The timeout for the request. Defaults to self::$timeout
 	 *
 	 * @return array|WP_Error Array of post objects on success or WP_Error object on failure.
 	 */
@@ -56,11 +57,14 @@ class JP_WP_REST_API_Client {
 	 * @param string|array $post_types Post type(s) to query for. Can be on post type as a string or an array of post types. Default is 'post'
 	 * @param bool|array   $filters    Optional. Filters to use in query. Should be an array in form of filter => value. See REST API docs for possible values. The default is false, which skips adding filters.
 	 * @param string       $end_point  End point to make request to. Defaults to 'posts' which is all this function supports/is tested with.
+	 * @param bool|string  $url The root Optional. URL for the API. Defaults to the URL for the current site.
 	 *
 	 * @return string|void
 	 */
-	public static function posts_url_string( $post_types = 'post', $filters = false, $end_point = 'posts' ) {
-		$url = json_url( $end_point );
+	public static function posts_url_string( $post_types = 'post', $filters = false, $end_point = 'posts', $url = false ) {
+		if ( ! $url  ) {
+			$url = json_url( $end_point );
+		}
 
 		if ( is_string( $post_types ) ) {
 			$post_types = array ( $post_types );
@@ -156,11 +160,16 @@ class JP_WP_REST_API_Client {
 	 *
 	 * @param object $post       A post from any site, as returned by REST API
 	 * @param string $auth       Authentication to add to POST request headers.
-	 * @param string $remote_url URL to post to.
+	 * @param bool|string  $url The root Optional. URL for the API. Defaults to the URL for the current site.
+	 * @param bool|int          Optional. The timeout for the request. Defaults to self::$timeout
 	 *
-	 * @return The response or error.
+	 * @return array|wp_error The response or error.
 	 */
-	static function remote_post( $post, $auth, $remote_url = false, $timeout = false ) {
+	static function remote_post( $post, $auth, $url = false, $timeout = false ) {
+		if ( ! $url  ) {
+			$url = json_url();
+		}
+
 		if ( ! $timeout ) {
 			$timeout = self::$timeout;
 		}
@@ -170,7 +179,7 @@ class JP_WP_REST_API_Client {
 				'Authorization' => $auth,
 			);
 
-			$response = wp_remote_post( $remote_url, array (
+			$response = wp_remote_post( $url, array (
 					'method'      => 'POST',
 					'timeout'     => $timeout,
 					'headers'     => $headers,
