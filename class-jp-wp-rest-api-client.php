@@ -18,12 +18,13 @@ class JP_WP_REST_API_Client {
 	/**
 	 * Makes a GET request to the WP REST API & returns JSON Object
 	 *
-	 * @param string $url URL to GET
-	 * @param bool|int          Optional. The timeout for the request. Defaults to self::$timeout
+	 * @param string    $url       URL to GET
+	 * @param bool|int  $timeout   Optional. The timeout for the request. Defaults to self::$timeout
+	 * @param bool      $decode    Optional. Whether to decode JSON or not. Default is true.
 	 *
 	 * @return array|WP_Error Array of post objects on success or WP_Error object on failure.
 	 */
-	public static function get_json( $url, $timeout = false ) {
+	public static function get_json( $url, $timeout = false, $decode = true ) {
 		if ( ! $timeout ) {
 			$timeout = self::$timeout;
 		}
@@ -42,8 +43,12 @@ class JP_WP_REST_API_Client {
 		//return if not an error
 		if ( ! is_wp_error( $data ) ) {
 
-			//decode and return
-			return json_decode( $data );
+			if ( $decode ) {
+				//decode and return
+				return json_decode( $data );
+			}
+				//return undecoded
+				return $data;
 
 		}
 
@@ -151,7 +156,6 @@ class JP_WP_REST_API_Client {
 		add_action( 'jp_rest_client_terms_on_import', $terms, $id, $post[ 'import_id' ] );
 
 		return $id;
-
 
 	}
 
