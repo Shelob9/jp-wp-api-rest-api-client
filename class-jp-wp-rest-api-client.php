@@ -79,13 +79,14 @@ class JP_WP_REST_API_Client {
 	 * @param string|array $post_types Post type(s) to query for. Can be on post type as a string or an array of post types. Default is 'post'
 	 * @param bool|array   $filters    Optional. Filters to use in query. Should be an array in form of filter => value. See REST API docs for possible values. The default is false, which skips adding filters.
 	 * @param string       $end_point  End point to make request to. Defaults to 'posts' which is all this function supports/is tested with.
-	 * @param bool|string  $url The root Optional. URL for the API. Defaults to the URL for the current site.
+	 * @param bool|string  $url Optional. URL for the API. Defaults to the URL for the current site.
+	 * @param null|int     $blog_id Optional. If is multisite you may pass the blog ID for a site here.
 	 *
 	 * @return string|void
 	 */
-	public static function posts_url_string( $post_types = 'post', $filters = false, $end_point = 'posts', $url = false ) {
+	public static function posts_url_string( $post_types = 'post', $filters = false, $end_point = 'posts', $url = false, $blog_id = null ) {
 		if ( ! $url  ) {
-			$url = json_url( $end_point );
+			$url = get_json_url( $blog_id, $end_point );
 		}
 
 		if ( is_string( $post_types ) ) {
