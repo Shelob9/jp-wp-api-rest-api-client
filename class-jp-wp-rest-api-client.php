@@ -85,9 +85,7 @@ class JP_WP_REST_API_Client {
 	 * @return string|void
 	 */
 	public static function posts_url_string( $post_types = 'post', $filters = false, $end_point = 'posts', $url = false, $blog_id = null ) {
-		if ( ! $url  ) {
-			$url = get_json_url( $blog_id, $end_point );
-		}
+		$url = self::base_url_string( $end_point, $url, $blog_id );
 
 		if ( is_string( $post_types ) ) {
 			$post_types = array ( $post_types );
@@ -107,6 +105,23 @@ class JP_WP_REST_API_Client {
 
 		return $url;
 
+	}
+
+	/**
+	 * Construct base url string
+	 *
+	 * @param string $endpoint Optional. Endpoint to query. Default is 'post'
+	 * @param bool|string  $url    Optional. Root URL for API. If false, the default, current site will be used.
+	 * @param null|int $blog_id Optional. If is multisite, and $url = false, set a blog ID to get another site's API.
+	 *
+	 * @return bool|string
+	 */
+	private static function base_url_string( $endpoint = 'post', $url = false, $blog_id = null ) {
+		if ( ! $url  ) {
+			$url = get_json_url( $blog_id, $endpoint );
+		}
+
+		return $url;
 	}
 
 	/**
